@@ -109,7 +109,8 @@ func TestHandleUserNameChange(t *testing.T) {
 		user.Status.UserName = "theuser"
 		ctx := workflow.NewContext(zap.S(), []status.Condition{})
 		ctx.Client = *mongodbatlas.NewClient(&http.Client{})
-		result := handleUserNameChange(ctx, "", user)
+		result, userChanged := handleUserNameChange(ctx, "", user)
+		assert.True(t, userChanged)
 		assert.True(t, result.IsOk())
 	})
 }
